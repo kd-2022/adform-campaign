@@ -53,43 +53,33 @@ const campaignReducer = (state = initialState, action) => {
       };
     case SEARCH_CAMPAIGN_BY_DATE:
       const search_by_date_results = updatedList.campaignList.filter((item) => {
-        var startD = String(action.payload.startDate.getDate()).padStart(
-          2,
-          "0"
-        );
-        var startM = String(action.payload.startDate.getMonth() + 1).padStart(
-          2,
-          "0"
-        );
+
+        var startD = String(action.payload.startDate.getDate()).padStart(2,"0");
+        var startM = String(action.payload.startDate.getMonth() + 1).padStart(2,"0");
         var startY = action.payload.startDate.getFullYear();
-        var selectedStartDate = startM + "/" + startD + "/" + startY;
+        
+
         var endD = String(action.payload.endDate.getDate()).padStart(2, "0");
-        var endM = String(action.payload.endDate.getMonth() + 1).padStart(
-          2,
-          "0"
-        );
+        var endM = String(action.payload.endDate.getMonth() + 1).padStart(2,"0");
         var endY = action.payload.endDate.getFullYear();
-        var selectedEndDate = endM + "/" + endD + "/" + endY;
-        var item_startDate = moment(item.startDate, "MM/DD/YYYY");
-        var item_endDate = moment(item.endDate, "MM/DD/YYYY");
-        var startdate = moment(selectedStartDate, "MM/DD/YYYY");
-        var enddate = moment(selectedEndDate, "MM/DD/YYYY");
-        var start_range = startdate.isBetween(
-          item_startDate,
-          item_endDate,
-          "days",
-          true
-        );
-        var end_range = enddate.isBetween(
-          item_startDate,
-          item_endDate,
-          "days",
-          true
-        );
+        
+        const [monthS, dayS, yearS] = item.startDate.split('/');
+        const [monthE, dayE, yearE] = item.endDate.split('/');
+        
+        const startDate = new Date(+yearS, monthS - 1, +dayS);
+        const endDate = new Date(+yearE, monthE - 1, +dayE);
+        
+        const selected_startDate = new Date(+startY, startM - 1, +startD);
+        const selected_endDate = new Date(+endY, endM - 1, +endD);
+        const range = moment().range(selected_startDate, selected_endDate);
+        const start_range = range.contains(startDate);
+        const end_range = range.contains(endDate);
+
         if (start_range == true || end_range == true) {
           return true;
         }
       });
+      
       return {
         ...updatedList,
         campaignList: search_by_date_results,

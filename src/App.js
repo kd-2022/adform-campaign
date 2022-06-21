@@ -3,13 +3,9 @@ import Campaign from './Component/Campaign'
 
 
 function App() {
-
-  const test = [{
-    name: "abc"
-  }];
-  window.test = test;
   return (
     <div className="App">
+      <h2>Campaign Data</h2>
       <Campaign />
     </div>
   );
