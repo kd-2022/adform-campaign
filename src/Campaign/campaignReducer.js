@@ -2,7 +2,7 @@ import {
   GET_CAMPAIGN,
   SEARCH_CAMPAIGN_BY_NAME,
   SEARCH_CAMPAIGN_BY_DATE,
-  DISPLAY_LOADER,
+  DISPLAY_LOADER
 } from "./campaignType";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
@@ -11,11 +11,15 @@ const moment = extendMoment(Moment);
 
 let initialState = {
   loader: false,
-  campaignList: []
+  campaignList: [],
+  startDate : new Date(),
+  endDate : new Date()
 };
 const updatedList = {
   loader: false,
   campaignList: [],
+  startDate : new Date(),
+  endDate : new Date()
 };
 
 const campaignReducer = (state = initialState, action) => {
@@ -38,7 +42,9 @@ const campaignReducer = (state = initialState, action) => {
       return {
         ...updatedList,
         campaignList: newCampgainList,
-        loader: false
+        loader: false,
+        startDate: new Date(),
+        endDate: new Date()
       };
 
     case SEARCH_CAMPAIGN_BY_NAME:
@@ -83,13 +89,15 @@ const campaignReducer = (state = initialState, action) => {
       return {
         ...updatedList,
         campaignList: search_by_date_results,
-        loader: false
+        loader: false,
+        startDate : action.payload.startDate,
+        endDate: action.payload.endDate
       };
     case DISPLAY_LOADER:
       return {
         ...updatedList,
         loader: action.payload,
-      };
+      };  
 
     default:
       return state;

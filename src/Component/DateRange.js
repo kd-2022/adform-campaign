@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   search_Campaign_By_Date,
   display_Loader,
 } from "../Campaign/campaignAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const DateRange = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const dispatch = useDispatch();
 
+  const state = useSelector((data) => data);
+  useEffect(() =>{
+    if(state.startDate || state.endDate){
+      setStartDate(state.startDate);
+      setEndDate(state.endDate);
+    }
+  },[state.startDate, state.endDate])
+
+  
+  const [startDate, setStartDate] = useState(state.startDate);
+  const [endDate, setEndDate] = useState(state.endDate);
+  const dispatch = useDispatch();
+  
   const handleStartDate = (date) => {
     setStartDate(date);
     let searchDate = {
