@@ -25,8 +25,10 @@ const updatedList = {
 const campaignReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CAMPAIGN:
+      let newCampgainList = []
+      if(action.payload.campaignList != null && action.payload.campaignList.length > 0){
       updatedList.campaignList.length = 0;
-      const newCampgainList = action.payload.campaignList.map((item) => {
+       newCampgainList = action.payload.campaignList.map((item) => {
         var user_details = action.payload.userList.find(
           (user) => user.id === item.userId
         );
@@ -39,6 +41,7 @@ const campaignReducer = (state = initialState, action) => {
         updatedList.campaignList.push(newUserDetails);
         return newUserDetails;
       });
+    }
       return {
         ...updatedList,
         campaignList: newCampgainList,
