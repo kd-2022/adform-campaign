@@ -14,6 +14,30 @@ describe("Campaign Action", () => {
   const displayLoader = () => ({ type: "DISPLAY_LOADER" });
 
   
+  function success() {
+    return {
+      type: 'GET_CAMPAIGN'
+    }
+  }
+  
+  function fetchUser () {
+     return async dispatch => {
+      return fetch('https://jsonplaceholder.typicode.com/users') // Some async action with promise
+        .then(() => dispatch(success()))
+    };
+  }
+  
+  it('should execute fetch user', () => {
+    const store = mockStore({})
+  
+    // Return the promise
+    return store.dispatch(fetchUser())
+      .then(() => {
+        const actions = store.getActions()
+        expect(actions[0]).toEqual(success())
+      })
+  })
+
   
   it("Should dispatch action to get campaign list", () => {
     const initialState = {};
