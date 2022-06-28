@@ -1,5 +1,5 @@
 import './App.css';
-import Campaign from './Component/Campaign'
+import Campaign from './components/campaign/Campaign'
 
 
 function App() {

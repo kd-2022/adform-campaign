@@ -4,10 +4,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   search_Campaign_By_Date,
   display_Loader,
-} from "../Campaign/campaignAction";
+} from "../../actions/campaignAction";
 import { useDispatch, useSelector } from "react-redux";
 
-const DateRange = () => {
+const DateFilter = () => {
 
   const state = useSelector((data) => data);
   useEffect(() =>{
@@ -73,4 +73,4 @@ const DateRange = () => {
   );
 };
 
-export default DateRange;
+export default DateFilter;

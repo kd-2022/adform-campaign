@@ -1,32 +1,32 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import CampaignList from "./CampaignList";
+import { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import "./Campaign.css";
-import { fetch_user, display_Loader } from "../Campaign/campaignAction";
-import Search from "./Search";
-import DateRange from "./DateRange";
-import Loader from "./Loader";
-import { campaignData } from "./Data";
+import CampaignList from "./CampaignList";
+import DateFilter from "../dateFilter/DateFilter";
+import Search from "../search/Search";
+import Loader from "../loader/Loader";
+import { campaignData } from "../../data/Data";
+import { get_Campaign_List, display_Loader } from "../../actions/campaignAction";
 
 const Campaign = () => {
-  const state = useSelector((data) => data);
+  const state = useSelector((storeData) => storeData);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(display_Loader(true));
-    dispatch(fetch_user(campaignData));
+    dispatch(get_Campaign_List(campaignData));
   }, [dispatch]);
 
   const AddCampaigns = (data) => {
     dispatch(display_Loader(true));
-    dispatch(fetch_user(data));
+    dispatch(get_Campaign_List(data));
   };
   window.AddCampaigns = AddCampaigns;
 
   return (
     <>
-      <DateRange />
+      <DateFilter />
       <Search />
       {state.loader ? <Loader /> : ""}
       {state.campaignList != null && state.campaignList.length > 0 ? (

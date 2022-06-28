@@ -1,9 +1,8 @@
-import { configure, shallow } from "enzyme";
-import { getByPlaceholderText, render, screen } from '@testing-library/react';
-import {within} from '@testing-library/dom'
+import { configure } from "enzyme";
+import { render } from '@testing-library/react';
 import Adapter from "enzyme-adapter-react-16";
 import { Provider } from 'react-redux';
-import Campaign from "./Component/Campaign";
+import Campaign from "../campaign/Campaign";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 

@@ -1,10 +1,8 @@
-import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import axios from "axios";
+
 
 describe("Campaign Action", () => {
-  const initialState = {};
   const middlewares = [thunk];
   const mockStore = configureMockStore(middlewares);
 
@@ -16,11 +14,11 @@ describe("Campaign Action", () => {
   
   function success() {
     return {
-      type: 'GET_CAMPAIGN'
+      type: 'GET_CAMPAIGN_WITH_USER'
     }
   }
   
-  function fetchUser () {
+  function get_Campaign_List () {
      return async dispatch => {
       return fetch('https://jsonplaceholder.typicode.com/users') // Some async action with promise
         .then(() => dispatch(success()))
@@ -31,7 +29,7 @@ describe("Campaign Action", () => {
     const store = mockStore({})
   
     // Return the promise
-    return store.dispatch(fetchUser())
+    return store.dispatch(get_Campaign_List())
       .then(() => {
         const actions = store.getActions()
         expect(actions[0]).toEqual(success())

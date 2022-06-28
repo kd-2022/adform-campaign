@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { search_Campaign_By_Name, display_Loader } from "../Campaign/campaignAction";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { search_Campaign_By_Name, display_Loader } from "../../actions/campaignAction";
 
 
 const Search = () => {
@@ -17,7 +17,7 @@ const Search = () => {
   };
 
   const handleClick = () =>{
-    //dispatch(search_Campaign_By_Name(input));
+    dispatch(search_Campaign_By_Name(input));
   }
 
   return (
