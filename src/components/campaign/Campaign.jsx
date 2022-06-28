@@ -1,27 +1,27 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import moment from "moment";
-import { Table } from "react-bootstrap";
-import "./Campaign.css";
-import CampaignList from "./CampaignList";
-import DateFilter from "../dateFilter/DateFilter";
-import Search from "../search/Search";
-import Loader from "../loader/Loader";
-import { campaignData } from "../../data/Data";
-import { get_Campaign_List, display_Loader } from "../../actions/campaignAction";
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import moment from 'moment';
+import { Table } from 'react-bootstrap';
+import './Campaign.css';
+import CampaignList from './CampaignList';
+import DateFilter from '../dateFilter/DateFilter';
+import Search from '../search/Search';
+import Loader from '../loader/Loader';
+import { campaignData } from '../../data/Data';
+import { getCampaignList, displayLoader } from '../../actions/campaignAction';
 
 const Campaign = () => {
   const state = useSelector((storeData) => storeData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(display_Loader(true));
-    dispatch(get_Campaign_List(campaignData));
-  }, [dispatch]);
+    dispatch(displayLoader(true));
+    dispatch(getCampaignList(campaignData));
+  }, [ dispatch ]);
 
   const AddCampaigns = (data) => {
-    dispatch(display_Loader(true));
-    dispatch(get_Campaign_List(data));
+    dispatch(displayLoader(true));
+    dispatch(getCampaignList(data));
   };
   window.AddCampaigns = AddCampaigns;
 
@@ -29,7 +29,7 @@ const Campaign = () => {
     <>
       <DateFilter />
       <Search />
-      {state.loader ? <Loader /> : ""}
+      { state.loader ? <Loader /> : '' }
       {state.campaignList != null && state.campaignList.length > 0 ? (
         <Table striped bordered hover size="sm">
           <thead className="header-design">
@@ -44,8 +44,8 @@ const Campaign = () => {
           </thead>
           <tbody>
             {state.campaignList.map((item, index) => {
-              return moment(item.startDate, "MM-DD-YYYY").isBefore(moment(item.endDate, "MM-DD-YYYY")) ? (
-                <CampaignList key={index} item={item} /> ) : ( false );
+              return moment(item.startDate, 'MM-DD-YYYY').isBefore(moment(item.endDate, 'MM-DD-YYYY')) ? (
+                <CampaignList key= { item.id } item= { item } /> ) : ( false );
             })}
           </tbody>
         </Table>

@@ -1,9 +1,9 @@
-import "./Campaign.css";
-import { get_Campaign_Status, get_USD_Value } from "../../utils/utils";
+import './Campaign.css';
+import { getCampaignStatus, getUSDValue } from '../../utils/utils';
 
 const CampaignList = (props) => {
-  let status = get_Campaign_Status(props);
-  let usdVal = get_USD_Value(props);
+  const status = getCampaignStatus(props);
+  const usdVal = getUSDValue(props);
 
   return (
     <tr>
@@ -12,9 +12,9 @@ const CampaignList = (props) => {
       <td>{props.item.startDate}</td>
       <td>{props.item.endDate}</td>
       <td>
-        <span className={status ? "active" : "inActive"}></span>
+        <span className={ status ? 'active' : 'inActive' }></span>
         {status ? (
-          <span className="active-status">Active</span>
+          <span className='active-status'>Active</span>
         ) : (
           <span>Inactive </span>
         )}

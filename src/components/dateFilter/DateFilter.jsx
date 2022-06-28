@@ -1,72 +1,71 @@
-import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
-  search_Campaign_By_Date,
-  display_Loader,
-} from "../../actions/campaignAction";
-import { useDispatch, useSelector } from "react-redux";
+  searchCampaignByDate,
+  displayLoader,
+} from '../../actions/campaignAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DateFilter = () => {
 
   const state = useSelector((data) => data);
+  const [ startDate, setStartDate ] = useState(state.startDate);
+  const [ endDate, setEndDate ] = useState(state.endDate);
+  const dispatch = useDispatch();
+
   useEffect(() =>{
     if(state.startDate || state.endDate){
       setStartDate(state.startDate);
       setEndDate(state.endDate);
     }
-  },[state.startDate, state.endDate])
-
-  
-  const [startDate, setStartDate] = useState(state.startDate);
-  const [endDate, setEndDate] = useState(state.endDate);
-  const dispatch = useDispatch();
+  },[ state.startDate, state.endDate ])
   
   const handleStartDate = (date) => {
     setStartDate(date);
-    let searchDate = {
+    const searchDate = {
       startDate: date,
       endDate: endDate,
     };
-    dispatch(display_Loader(true));
-    dispatch(search_Campaign_By_Date(searchDate));
+    dispatch(displayLoader(true));
+    dispatch(searchCampaignByDate(searchDate));
   };
 
   const handleEndDate = (date) => {
     setEndDate(date);
-    let searchDate = {
+    const searchDate = {
       startDate: startDate,
       endDate: date,
     };
-    dispatch(display_Loader(true));
-    dispatch(search_Campaign_By_Date(searchDate));
+    dispatch(displayLoader(true));
+    dispatch(searchCampaignByDate(searchDate));
   };
 
   return (
     <>
-      <div className="dateRange">
+      <div className='dateRange'>
         <DatePicker
-          selected={startDate}
-          onChange={handleStartDate}
+          selected={ startDate }
+          onChange={ handleStartDate }
           peekNextMonth
           showMonthDropdown
           showYearDropdown
-          dropdownMode="select"
-          onKeyDown={(e) => {
+          dropdownMode='select'
+          onKeyDown={ (e) => {
             e.preventDefault();
-         }}
+         } }
         />
         <DatePicker
-          selected={endDate}
-          onChange={handleEndDate}
+          selected={ endDate }
+          onChange={ handleEndDate }
           peekNextMonth
           showMonthDropdown
           showYearDropdown
-          dropdownMode="select"
-          minDate={startDate}
-          onKeyDown={(e) => {
+          dropdownMode='select'
+          minDate={ startDate }
+          onKeyDown={ (e) => {
             e.preventDefault();
-         }}
+         } }
         />
       </div>
     </>

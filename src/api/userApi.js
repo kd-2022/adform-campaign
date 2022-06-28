@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const fetchUsers = async () => {
   let response;
 
   try {
-    response = await axios.get("https://jsonplaceholder.typicode.com/users");
+    response = await axios.get('https://jsonplaceholder.typicode.com/users');
   } catch (e) {
     throw new Error(e.message);
   }

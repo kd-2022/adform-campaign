@@ -1,7 +1,6 @@
 import './App.css';
 import Campaign from './components/campaign/Campaign'
 
-
 function App() {
   return (
     <div className="App">

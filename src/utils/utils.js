@@ -1,90 +1,88 @@
-import Moment from "moment";
-import { extendMoment } from "moment-range";
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 const moment = extendMoment(Moment);
 
-
-
-export const get_Campaign_With_User = (action) => {
+export const getCampaignWithUser = (action) => {
   if (action.payload.campaignList != null && action.payload.campaignList.length > 0) 
   {
-    let newCampgainList = action.payload.campaignList.map((item) => {
-      var user_details = action.payload.userList.find(
+    const newCampgainList = action.payload.campaignList.map((item) => {
+      var userDetails = action.payload.userList.find(
         (user) => user.id === item.userId
       );
       let newUserDetails;
-      if (user_details != null && user_details.name != null) {
-        newUserDetails = { ...item, userName: user_details.name };
+      if (userDetails != null && userDetails.name != null) {
+        newUserDetails = { ...item, userName: userDetails.name };
       } else {
-        newUserDetails = { ...item, userName: "Unknown User" };
+        newUserDetails = { ...item, userName: 'Unknown User' };
       }
       return newUserDetails;
     });
     return newCampgainList;
   } else {
-    let newCampgainList = [];
+    const newCampgainList = [];
     return newCampgainList;
   }
 };
 
-export const search_Campaign_By_Date = (initialState,action) => {
-    const search_by_date_results = initialState.campaignList.filter((item) => {
+export const searchCampaignByDate = (initialState,action) => {
+    const searchByDateResults = initialState.campaignList.filter((item) => {
 
-        const [startM, startD, startY] = moment(action.payload.startDate).format("MM/DD/YYYY").split('/');
-        const [endM, endD, endY] = moment(action.payload.endDate).format("MM/DD/YYYY").split('/');
+        const [ startM, startD, startY ] = moment(action.payload.startDate).format('MM/DD/YYYY').split('/');
+        const [ endM, endD, endY ] = moment(action.payload.endDate).format('MM/DD/YYYY').split('/');
 
-        const [monthS, dayS, yearS] = item.startDate.split('/');
-        const [monthE, dayE, yearE] = item.endDate.split('/');
+        const [ monthS, dayS, yearS ] = item.startDate.split('/');
+        const [ monthE, dayE, yearE ] = item.endDate.split('/');
         
         const startDate = new Date(+yearS, monthS - 1, +dayS);
         const endDate = new Date(+yearE, monthE - 1, +dayE);
         
-        const selected_startDate = new Date(+startY, startM - 1, +startD);
-        const selected_endDate = new Date(+endY, endM - 1, +endD);
-        const range = moment().range(selected_startDate, selected_endDate);
-        const start_range = range.contains(startDate);
-        const end_range = range.contains(endDate);
+        const selectedStartDate = new Date(+startY, startM - 1, +startD);
+        const selectedEndDate = new Date(+endY, endM - 1, +endD);
+        const range = moment().range(selectedStartDate, selectedEndDate);
+        const startRange = range.contains(startDate);
+        const endRange = range.contains(endDate);
 
-        if (start_range === true || end_range === true) {
+        if (startRange === true || endRange === true) {
           return true;
         }
         else{
             return false;
         }
       });
-      return search_by_date_results;
+      return searchByDateResults;
 }
 
-export const search_Campaign_By_Name = (initialState,action) => {
-    const search_results = initialState.campaignList.filter((item) => {
+export const searchCampaignByName = (initialState,action) => {
+    const searchResults = initialState.campaignList.filter((item) => {
         return item.name.toLowerCase().includes(action.payload);
       });
-      return search_results;
+      return searchResults;
 }
 
-export const get_Campaign_Status = (props) => {
+export const getCampaignStatus = (props) => {
   let status = false;  
-  let [mm, dd, yyyy] = moment(new Date()).format("MM/DD/YYYY").split('/');
+  const [ mm, dd, yyyy ] = moment(new Date()).format('MM/DD/YYYY').split('/');
   
-  const [monthS, dayS, yearS] = props.item.startDate.split("/");
-  const [monthE, dayE, yearE] = props.item.endDate.split("/");
+  const [ monthS, dayS, yearS ] = props.item.startDate.split('/');
+  const [ monthE, dayE, yearE ] = props.item.endDate.split('/');
 
   const startDate = new Date(+yearS, monthS - 1, +dayS);
   const endDate = new Date(+yearE, monthE - 1, +dayE);
-  const today_Date = new Date(+yyyy, mm - 1, +dd);
+  const todayDate = new Date(+yyyy, mm - 1, +dd);
 
   const range = moment().range(startDate, endDate);
-  const date_range = range.contains(today_Date);
+  const dateRange = range.contains(todayDate);
   
-  if (date_range === true) { 
+  if (dateRange === true) { 
     status = true;
   }
   return status;
 }
 
-export const get_USD_Value = (props) => {
-  let suffixes = ["", "K", "M", "B", "T"];
-  let suffixNum = Math.floor(("" + props.item.Budget).length / 3);
+export const getUSDValue = (props) => {
+  const suffixes = [ '', 'K', 'M', 'B', 'T' ];
+  const suffixNum = Math.floor(('' + props.item.Budget).length / 3);
   let shortValue = parseFloat(
     (suffixNum !== 0
       ? props.item.Budget / Math.pow(1000, suffixNum)
@@ -94,9 +92,7 @@ export const get_USD_Value = (props) => {
   if (shortValue % 1 !== 0) {
     shortValue = shortValue.toFixed(1);
   }
-  let usdVal = shortValue + suffixes[suffixNum];
+  const usdVal = shortValue + suffixes[ suffixNum ];
 
   return usdVal;
 }
-
-
