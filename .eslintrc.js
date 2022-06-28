@@ -21,7 +21,6 @@ module.exports = {
         'react/prefer-es6-class': 0,
         'react/jsx-filename-extension': 0,
         'react/jsx-curly-spacing': [ 2, 'always' ],
-        // 'react/jsx-indent': [ 2, 4 ],
         'react/prop-types': [ 1 ],
         'react/no-array-index-key': [ 1 ],
         'class-methods-use-this': [ 1 ],

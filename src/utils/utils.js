@@ -27,28 +27,20 @@ export const getCampaignWithUser = (action) => {
 
 export const searchCampaignByDate = (initialState,action) => {
     const searchByDateResults = initialState.campaignList.filter((item) => {
-
-        const [ startM, startD, startY ] = moment(action.payload.startDate).format('MM/DD/YYYY').split('/');
-        const [ endM, endD, endY ] = moment(action.payload.endDate).format('MM/DD/YYYY').split('/');
-
         const [ monthS, dayS, yearS ] = item.startDate.split('/');
         const [ monthE, dayE, yearE ] = item.endDate.split('/');
         
         const startDate = new Date(+yearS, monthS - 1, +dayS);
         const endDate = new Date(+yearE, monthE - 1, +dayE);
         
-        const selectedStartDate = new Date(+startY, startM - 1, +startD);
-        const selectedEndDate = new Date(+endY, endM - 1, +endD);
-        const range = moment().range(selectedStartDate, selectedEndDate);
-        const startRange = range.contains(startDate);
-        const endRange = range.contains(endDate);
-
-        if (startRange === true || endRange === true) {
-          return true;
+        const dates = [ moment(action.payload.startDate, 'MM/DD/YYYY'), moment(action.payload.endDate, 'MM/DD/YYYY') ];
+        const range = moment.range(dates);
+        let isBetween = false;
+        if (range.contains(startDate) === true || range.contains(endDate) === true) {
+          isBetween = true;
+          return isBetween
         }
-        else{
-            return false;
-        }
+        return isBetween
       });
       return searchByDateResults;
 }
