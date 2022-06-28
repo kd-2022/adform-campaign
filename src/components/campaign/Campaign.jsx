@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import moment from "moment";
 import { Table } from "react-bootstrap";
 import "./Campaign.css";
 import CampaignList from "./CampaignList";
@@ -43,7 +44,7 @@ const Campaign = () => {
           </thead>
           <tbody>
             {state.campaignList.map((item, index) => {
-              return new Date(item.endDate).getTime() > new Date(item.startDate).getTime() ? (
+              return moment(item.startDate, "MM-DD-YYYY").isBefore(moment(item.endDate, "MM-DD-YYYY")) ? (
                 <CampaignList key={index} item={item} /> ) : ( false );
             })}
           </tbody>
