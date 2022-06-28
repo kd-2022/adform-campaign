@@ -1,5 +1,6 @@
 import './Campaign.css';
 import { getCampaignStatus, getUSDValue } from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 const CampaignList = (props) => {
   const status = getCampaignStatus(props);
@@ -22,6 +23,12 @@ const CampaignList = (props) => {
       <td>{usdVal} USD</td>
     </tr>
   );
+};
+
+CampaignList.propTypes = {
+  item: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  userName: PropTypes.string
 };
 
 export default CampaignList;
