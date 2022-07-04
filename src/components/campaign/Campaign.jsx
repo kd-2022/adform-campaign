@@ -8,7 +8,8 @@ import DateFilter from '../dateFilter/DateFilter';
 import Search from '../search/Search';
 import Loader from '../loader/Loader';
 import { campaignData } from '../../data/Data';
-import { getCampaignList, displayLoader } from '../../actions/campaignAction';
+import { displayLoader } from '../../actions/campaignAction';
+import { getCampaignList } from '../../thunk/thunk'
 
 const Campaign = () => {
   const state = useSelector((storeData) => storeData);

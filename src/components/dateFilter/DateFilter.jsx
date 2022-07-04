@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
@@ -10,31 +9,20 @@ import { useDispatch, useSelector } from 'react-redux';
 const DateFilter = () => {
 
   const state = useSelector((data) => data);
-  const [ startDate, setStartDate ] = useState(state.startDate);
-  const [ endDate, setEndDate ] = useState(state.endDate);
   const dispatch = useDispatch();
 
-  useEffect(() =>{
-    if(state.startDate || state.endDate){
-      setStartDate(state.startDate);
-      setEndDate(state.endDate);
-    }
-  },[ state.startDate, state.endDate ])
-  
   const handleStartDate = (date) => {
-    setStartDate(date);
     const searchDate = {
       startDate: date,
-      endDate: endDate,
+      endDate: state.endDate,
     };
     dispatch(displayLoader(true));
     dispatch(searchCampaignByDate(searchDate));
   };
 
   const handleEndDate = (date) => {
-    setEndDate(date);
     const searchDate = {
-      startDate: startDate,
+      startDate: state.startDate,
       endDate: date,
     };
     dispatch(displayLoader(true));
@@ -45,7 +33,7 @@ const DateFilter = () => {
     <>
       <div className='dateRange'>
         <DatePicker
-          selected={ startDate }
+          selected={ state.startDate }
           onChange={ handleStartDate }
           peekNextMonth
           showMonthDropdown
@@ -56,13 +44,13 @@ const DateFilter = () => {
          } }
         />
         <DatePicker
-          selected={ endDate }
+          selected={ state.endDate }
           onChange={ handleEndDate }
           peekNextMonth
           showMonthDropdown
           showYearDropdown
           dropdownMode='select'
-          minDate={ startDate }
+          minDate={ state.startDate }
           onKeyDown={ (e) => {
             e.preventDefault();
          } }

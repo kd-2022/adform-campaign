@@ -4,43 +4,23 @@ import {
   SEARCH_CAMPAIGN_BY_DATE,
   DISPLAY_LOADER,
 } from '../types/campaignType';
-import { fetchUsers } from '../api/userApi';
 
-export const getCampaignWithUser = (data) => {
-  return {
+export const getCampaignWithUser = (data) => ({
     type: GET_CAMPAIGN_WITH_USER,
-    payload: data,
-  };
-};
+    payload: data
+});
 
-export const getCampaignList = (data) => {
-  return async (dispatch) => {
-    const userData = await fetchUsers();
-    const listData = {
-      campaignList: data,
-      userList: userData,
-    };
-    dispatch(getCampaignWithUser(listData));
-  };
-};
-
-export const searchCampaignByName = (search) => {
-  return {
+export const searchCampaignByName = (search) => ({
     type: SEARCH_CAMPAIGN_BY_NAME,
-    payload: search,
-  };
-};
+    payload: search
+});
 
-export const searchCampaignByDate = (date) => {
-  return {
+export const searchCampaignByDate = (date) => ({
     type: SEARCH_CAMPAIGN_BY_DATE,
-    payload: date,
-  };
-};
+    payload: date
+});
 
-export const displayLoader = (status) => {
-  return {
+export const displayLoader = (status) => ({
     type: DISPLAY_LOADER,
-    payload: status,
-  };
-};
+    payload: status
+});
